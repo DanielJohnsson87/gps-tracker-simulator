@@ -21,7 +21,7 @@ func main() {
 	lon := flag.Float64("lon", 0.0, "Starting longitude")
 	altitude := flag.Int("altitude", 100, "Altitude in meters")
 	heading := flag.Int("heading", 0, "Initial heading in degrees (0-359)")
-	sim := flag.String("simulation", "", "Simulation mode: buffer, stationary (default: stationary)")
+	sim := flag.String("simulation", "", "Simulation mode: buffer, pending, stationary (default: stationary)")
 	verbose := flag.Bool("verbose", false, "Enable verbose logging")
 
 	flag.Usage = func() {
@@ -62,6 +62,8 @@ func main() {
 	case "buffer":
 		log.Printf("  Mode: buffer (30 records, 10 min apart, oldest first)")
 		gen = simulation.NewBuffer(*lat, *lon, *altitude, *heading)
+	case "pending":
+		gen = &simulation.Pending{Lat: *lat, Lon: *lon}
 	case "stationary", "":
 		gen = &simulation.Stationary{
 			Lat:      *lat,

@@ -32,7 +32,7 @@ go build -o tracker .
 | `--lon` | `0.0` | Longitude |
 | `--altitude` | `100` | Altitude in meters |
 | `--heading` | `0` | Heading in degrees (0-359) |
-| `--simulation` | `stationary` | Simulation mode (see below) |
+| `--simulation` | `stationary` | Simulation mode: stationary, buffer, pending |
 | `--verbose` | `false` | Enable verbose logging |
 
 ## Simulation modes
@@ -44,6 +44,15 @@ Sends GPS data from a fixed position at the configured interval.
 ```bash
 ./tracker --server=localhost:5027 --imei=359633107700001 \
   --lat=54.6872 --lon=25.2797
+```
+
+### `pending`
+
+Simulates a device that is online but has no GPS fix. Sends the given coordinates with 0 satellites, signaling an invalid position. This triggers the "Pending" state on GpsGate: the device is communicating but has no valid position (e.g. indoors or no GPS antenna).
+
+```bash
+./tracker --server=localhost:5027 --imei=359633107700001 \
+  --lat=54.6872 --lon=25.2797 --simulation=pending
 ```
 
 ### `buffer`
