@@ -66,6 +66,17 @@ After the 30 buffered records are sent, it continues as a stationary tracker wit
   --lat=54.6872 --lon=25.2797 --simulation=buffer --interval=5 --verbose
 ```
 
+### `buffer-recentfirst`
+
+Like `buffer`, but sends the most recent position first (current timestamp), then flushes the remaining 29 buffered records from oldest to newest. This simulates a tracker that prioritizes reporting its current location before catching up on historical data.
+
+After all buffered records are sent, it continues as a stationary tracker with real-time timestamps.
+
+```bash
+./tracker --server=localhost:5027 --imei=359633107700001 \
+  --lat=54.6872 --lon=25.2797 --simulation=buffer-recentfirst --interval=5 --verbose
+```
+
 ## Protocol
 
 Implements Teltonika Codec 8 over TCP:
